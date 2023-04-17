@@ -30,7 +30,7 @@ Builder.prototype.get = function() {
 // ES6-class-IntBuilder
 
 class IntBuilder extends Builder {
-    constructor (value) {
+    constructor (value = 0) {
         super(value);
     }
 
@@ -62,7 +62,7 @@ class IntBuilder extends Builder {
 // ES5-class-StringBuilder
 
 function StringBuilder(value) {
-    this.value = value;
+    this.value = typeof value != 'undefined' ? value : '';
 }
 
 StringBuilder.prototype = Object.create(Builder.prototype);
