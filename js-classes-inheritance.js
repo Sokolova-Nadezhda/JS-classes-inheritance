@@ -14,6 +14,10 @@ Builder.prototype.plus = function(n) {
     this.value += sumArgs;
     return this;
 };
+
+Builder.prototype.minus = function() {
+    throw new Error("Abstract method must be overridden");
+};
   
 Builder.prototype.multiply = function(n) {
     var multiplier = this.value;
@@ -21,6 +25,10 @@ Builder.prototype.multiply = function(n) {
         this.value += multiplier;
     }
     return this;
+};
+
+Builder.prototype.divide = function() {
+    throw new Error("Abstract method must be overridden");
 };
 
 Builder.prototype.get = function() {
@@ -49,7 +57,7 @@ class IntBuilder extends Builder {
     }
 
     mod (n) {
-        this.value = this.value % n;
+        this.value %= n;
         return this;
     }
 
@@ -62,11 +70,10 @@ class IntBuilder extends Builder {
 // ES5-class-StringBuilder
 
 function StringBuilder(value) {
-    this.value = typeof value != 'undefined' ? value : '';
+    Builder.call(this, value || '');
 }
 
 StringBuilder.prototype = Object.create(Builder.prototype);
-StringBuilder.prototype.constructor = StringBuilder;
 
 StringBuilder.prototype.minus = function(n) {
     this.value = this.value.slice(0, this.value.length - n);
